@@ -4,10 +4,112 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
+    <header class="header">
+        <div class="nav-left">
+            <ul class="nav-links">
+                <li><a href="#" class="active" data-category="home">Home</a></li>
+                <li><a href="#" data-category="genre">Genre</a></li>
+                <li><a href="#" data-category="country">Country</a></li>
+            </ul>
+        </div>
+        <div class="search-container">
+            <input type="text" id="searchInput" class="search-box" placeholder="Search Movies">
+            <button id="searchBtn" class="search-btn"><i class="fas fa-search"></i></button>
+            <div id="searchSuggestions" class="search-suggestions"></div>
+        </div>
+        <div class="nav-categories">
+            <a href="#" data-type="movie">Movies</a>
+            <a href="#" data-type="tv">Series</a>
+            <a href="#" data-type="animation">Animation</a>
+        </div>
+        <a href="#" id="loginBtn">Login/Signup</a>
+        <div class="bell-icon">
+            <i class="fas fa-bell"></i>
+        </div>
+    </header>
+
+    <section class="hero" id="heroSection">
+        <div class="hero-info">
+            <h1 id="heroTitle">Loading...</h1>
+            <div id="heroMeta" class="hero-meta"></div>
+            <p id="heroDescription">Loading movie details...</p>
+        </div>
+        <div class="hero-buttons">
+            <button class="btn-primary"><i class="fas fa-play"></i> Watch Now</button>
+            <button class="btn-secondary"><i class="fa-solid fa-clock"></i> Watch Later</button>
+        </div>
+        <div class="hero-pagination">
+            <span class="pagination-dot active"></span>
+            <span class="pagination-dot"></span>
+            <span class="pagination-dot"></span>
+            <span class="pagination-dot"></span>
+            <span class="pagination-dot"></span>
+        </div>
+    </section>
+
+    <div class="content">
+        <section class="section recently-updated">
+            <div class="section-header">
+                <h2 class="section-title">Recently Updated</h2>
+            </div>
+            <div id="recentlyUpdated">
+                <div class="recent-container">
+                    <div class="recent-items-wrapper" id="recentItemsWrapper">
+                        <div>Loading...</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">Trending</h2>
+                <a href="#" class="view-all" id="viewAllTrending">View all <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div id="trendingGrid" class="trending-grid">
+                <div>Loading trending movies...</div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">New Release - Movies</h2>
+                <a href="#" class="view-all" id="viewAllNew">View all <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div id="newReleases" class="new-releases">
+                <div>Loading new releases...</div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">New Release - Series</h2>
+                <a href="#" class="view-all" id="viewAllSeries">View all <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div id="newReleaseSeries" class="new-release-series">
+                <div>Loading new series...</div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">Recommended</h2>
+                <div class="type-buttons">
+                    <a href="#" class="type-button active" data-type="all">All</a>
+                    <a href="#" class="type-button" data-type="Movies">Movies</a>
+                    <a href="#" class="type-button" data-type="Series">Series</a>
+                    <a href="#" class="type-button" data-type="Animation">Animation</a>
+                </div>
+                <a href="#" class="view-all" id="viewAllRecommended">View all <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div id="recommended" class="recommended">
+                <div>Loading recommended...</div>
+            </div>
+        </section>
+    </div>
+
     <script src="script.js"></script>
-</body>
-</html>
