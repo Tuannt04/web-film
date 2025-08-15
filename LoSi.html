@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Nhập / Đăng Ký</title>
+    <link rel="stylesheet" href="LoSi.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <div class="tabs">
+                <button class="tab-button active" data-tab="login">Đăng Nhập</button>
+                <button class="tab-button" data-tab="signup">Đăng Ký</button>
+            </div>
+            <div class="form-content active" id="login-form">
+                <h2>Đăng Nhập</h2>
+                <div class="form-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" placeholder="Nhập email của bạn" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Mật Khẩu</label>
+                    <input type="password" id="login-password" placeholder="Nhập mật khẩu" required>
+                </div>
+                <button class="submit-btn">Đăng Nhập</button>
+                <p class="form-link"><a href="#" id="forgot-password">Quên mật khẩu?</a></p>
+            </div>
+            <div class="form-content" id="signup-form">
+                <h2>Đăng Ký</h2>
+                <div class="form-group">
+                    <label for="signup-username">Tên Người Dùng</label>
+                    <input type="text" id="signup-username" placeholder="Nhập tên người dùng" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-email">Email</label>
+                    <input type="email" id="signup-email" placeholder="Nhập email của bạn" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-password">Mật Khẩu</label>
+                    <input type="password" id="signup-password" placeholder="Nhập mật khẩu" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-confirm-password">Xác Nhận Mật Khẩu</label>
+                    <input type="password" id="signup-confirm-password" placeholder="Xác nhận mật khẩu" required>
+                </div>
+                <button class="submit-btn">Đăng Ký</button>
+            </div>
+            <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Quay lại trang chủ</a>
+        </div>
+    </div>
+    <script src="LoSi.js"></script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Detail</title>
+    <link rel="stylesheet" href="detail.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav-left">
+            <ul class="nav-links">
+                <li><a href="index.html" data-category="">Home</a></li>
+                <li><a href="#" data-category="genre">Genre</a></li>
+                <li><a href="#" data-category="country">Country</a></li>
+            </ul>
+        </nav>
+        <div class="search-container">
+            <input type="text" id="searchInput" class="search-box" placeholder="Search movies...">
+            <button id="searchBtn" class="search-btn"><i class="fas fa-search"></i></button>
+            <div id="searchSuggestions" class="search-suggestions"></div>
+        </div>
+        <div class="nav-categories">
+            <a href="#" data-type="movie">Movies</a>
+            <a href="#" data-type="tv">Series</a>
+            <a href="#" data-type="animation">Animation</a>
+        </div>
+        <a id="loginBtn">Login/Signup</a>
+    </header>
+
+    <main class="detail-container">
+        <div class="player-section" id="playerSection">
+            <iframe width="100%" height="500" src="" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="detail-info">
+            <div class="poster-section">
+                <img id="detailPoster" src="" alt="Poster" style="display: none;">
+            </div>
+            <div class="info-section">
+                <h1 id="detailTitle">Loading...</h1>
+                <div id="detailTags" class="detail-tags"></div>
+                <p id="detailDescription">Loading description...</p>
+                <div id="detailMeta" class="detail-meta"></div>
+            </div>
+        </div>
+        <section class="seasons-section">
+            <h2>Seasons</h2>
+            <div id="seasonsList" class="seasons-list"></div>
+        </section>
+        <div class="recommendations-section">
+            <h2>May also like</h2>
+            <div class="recommended" id="recommendationsGrid"></div>
+        </div>
+        <section class="comments-section">
+            <h2>Comments</h2>
+            <div id="commentsList" class="comments-list">
+                <div class="comment">
+                    <div class="comment-user">
+                        <img src="placeholder-avatar.jpg" alt="User">
+                        <span>User1</span>
+                    </div>
+                    <p>Great movie!</p>
+                </div>
+            </div>
+            <textarea id="commentInput" placeholder="Add a comment..."></textarea>
+            <button id="postComment" class="btn-primary">Post</button>
+        </section>
+    </main>
+
+    <script src="detail.js"></script>
+</body>
+</html>
