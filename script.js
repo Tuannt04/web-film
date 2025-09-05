@@ -132,18 +132,22 @@ class MovieApp {
     }
 
     async loadNewReleases() {
-        const endpoint = this.selectedGenre ? `/discover/movie` : `/movie/now_playing`;
+        const endpoint = this.selectedGenre ? '/discover/movie' : '/movie/now_playing';
         const data = await this.fetchFromAPI(endpoint);
         if (data && data.results) {
-            console.log('Raw data from /movie/now_playing:', data.results); // Log để kiểm tra
-            const moviesWithDetails = await Promise.all(data.results.slice(0, 4).map(async (movie) => {
+            console.log('Raw data from /movie/now_playing:', data.results);
+            const moviesWithDetails = await Promise.all(data.results.slice(0, 20).map(async (movie) => {
                 const details = await this.getDetails(movie.id, 'movie');
                 return { ...movie, details };
             }));
             this.currentMovies = moviesWithDetails;
-            this.recentItems = data.results; // Giữ dữ liệu thô cho tham chiếu nếu cần
-            this.renderNewReleases(moviesWithDetails);
-            this.renderRecentlyUpdated(moviesWithDetails.slice(0, 3)); // Sử dụng moviesWithDetails cho Recently Updated
+            this.recentItems = moviesWithDetails;
+            this.renderNewReleases(moviesWithDetails.slice(0, 4));
+            this.renderRecentlyUpdated();
+        } else {
+            console.warn('No new releases loaded');
+            this.renderNewReleases([]);
+            this.renderRecentlyUpdated([]);
         }
     }
 
@@ -256,7 +260,6 @@ class MovieApp {
             `;
         }).join('');
 
-        // Add click event listeners for trending items
         this.addPosterClickListeners('.trending-item');
     }
 
@@ -289,7 +292,6 @@ class MovieApp {
             `;
         }).join('');
 
-        // Add click event listeners for new release items
         this.addPosterClickListeners('.new-release-item');
     }
 
@@ -312,7 +314,6 @@ class MovieApp {
             `;
         }).join('');
 
-        // Add click event listeners for new series items
         this.addPosterClickListeners('.new-release-series-item');
     }
 
@@ -324,7 +325,6 @@ class MovieApp {
             const metaContent = isSeries
                 ? (item.details && item.details.number_of_seasons ? `Season ${item.details.number_of_seasons}` : 'Season N/A')
                 : (item.details && item.details.runtime ? `<i class="fas fa-clock"></i> ${utils.formatRuntime(item.details.runtime)}` : '<i class="fas fa-clock"></i> N/A');
-            const icon = isSeries ? '' : '';
             return `
                 <div class="recommended-item" data-movie-id="${item.id}" data-media-type="${item.media_type}">
                     <div class="recommended-bg" style="background-image: url(${item.backdrop_path ? this.backdropBaseUrl + item.backdrop_path : ''})"></div>
@@ -339,76 +339,59 @@ class MovieApp {
             `;
         }).join('');
 
-        // Add click event listeners for recommended items
         this.addPosterClickListeners('.recommended-item');
     }
 
-    renderRecentlyUpdated() {
-    const recentlyUpdated = document.getElementById('recentlyUpdated');
-    const items = this.recentItems || [];
-    const start = this.currentRecentStart;
-    const end = start + 5;
-    const displayItems = items.slice(start, end);
-    
-    recentlyUpdated.innerHTML = `
-        <div class="recent-container">
-            ${this.currentRecentStart > 0 ? '<button class="scroll-btn-prev" id="scrollBtnPrev"><i class="fas fa-circle-arrow-left"></i></button>' : ''}
-            <div class="recent-items-wrapper" id="recentItemsWrapper">
-                ${displayItems.map(item => `
-                    <div class="recent-item" data-movie-id="${item.id}" data-media-type="${item.media_type || 'movie'}">
-                        <div class="recent-poster" style="background-image: url(${item.poster_path ? this.imageBaseUrl + item.poster_path : ''})"></div>
-                        <div class="recent-info">
-                            <h4>${item.title || item.name}</h4>
-                            <p>Rating: ${item.vote_average ? item.vote_average.toFixed(1) : 'N/A'}</p>
-                            <p>${item.release_date || item.first_air_date || 'Unknown'}</p>
-                        </div>
-                    </div>
-                `).join('')}
+    renderRecentlyUpdated(items = this.recentItems) {
+        const recentlyUpdated = document.getElementById('recentlyUpdated');
+        if (!recentlyUpdated) return;
+
+        items = items || [];
+        const start = this.currentRecentStart;
+        const end = start + 5;
+        const displayItems = items.slice(start, end);
+        
+        recentlyUpdated.innerHTML = `
+            <div class="recent-container">
+                ${this.currentRecentStart > 0 ? '<button class="scroll-btn-prev" id="scrollBtnPrev"><i class="fas fa-circle-arrow-left"></i></button>' : ''}
+                <div class="recent-items-wrapper" id="recentItemsWrapper">
+                    ${displayItems.length === 0
+                        ? '<div class="no-results">No recently updated items found</div>'
+                        : displayItems.map(item => `
+                            <div class="recent-item" data-movie-id="${item.id}" data-media-type="${item.media_type || 'movie'}">
+                                <div class="recent-poster" style="background-image: url(${item.poster_path ? this.imageBaseUrl + item.poster_path : ''})"></div>
+                                <div class="recent-info">
+                                    <h4>${item.title || item.name}</h4>
+                                    <p>Rating: ${item.vote_average ? item.vote_average.toFixed(1) : 'N/A'}</p>
+                                    <p>${item.release_date || item.first_air_date || 'Unknown'}</p>
+                                </div>
+                            </div>
+                        `).join('')}
+                </div>
+                ${end < items.length ? '<button class="scroll-btn-next" id="scrollBtnNext"><i class="fas fa-circle-arrow-right"></i></button>' : ''}
             </div>
-            ${end < items.length ? '<button class="scroll-btn-next" id="scrollBtnNext"><i class="fas fa-circle-arrow-right"></i></button>' : ''}
-        </div>
-    `;
-    
-    const scrollBtnNext = document.getElementById('scrollBtnNext');
-    if (scrollBtnNext) {
-        scrollBtnNext.addEventListener('click', () => {
-            this.currentRecentStart += 1;
-            this.renderRecentlyUpdated();
-        });
+        `;
+        
+        console.log('Display items:', displayItems); // Debug
+
+        const scrollBtnNext = document.getElementById('scrollBtnNext');
+        if (scrollBtnNext) {
+            scrollBtnNext.addEventListener('click', () => {
+                this.currentRecentStart += 1;
+                this.renderRecentlyUpdated();
+            });
+        }
+        
+        const scrollBtnPrev = document.getElementById('scrollBtnPrev');
+        if (scrollBtnPrev) {
+            scrollBtnPrev.addEventListener('click', () => {
+                this.currentRecentStart = Math.max(0, this.currentRecentStart - 1);
+                this.renderRecentlyUpdated();
+            });
+        }
+
+        this.addPosterClickListeners('.recent-item');
     }
-    
-    const scrollBtnPrev = document.getElementById('scrollBtnPrev');
-    if (scrollBtnPrev) {
-        scrollBtnPrev.addEventListener('click', () => {
-            this.currentRecentStart = Math.max(0, this.currentRecentStart - 1);
-            this.renderRecentlyUpdated();
-        });
-    }
-
-    // Add click event listeners for recent items
-    this.addPosterClickListeners('.recent-item');
-}
-
-// Define the method to handle poster clicks
-addPosterClickListeners(selector) {
-    const items = document.querySelectorAll(selector);
-    items.forEach(item => {
-        item.addEventListener('click', () => {
-            const movieId = item.dataset.movieId;
-            const mediaType = item.dataset.mediaType;
-            if (movieId) {
-                this.redirectToMovieDetails(movieId, mediaType);
-            } else {
-                console.error('Movie ID is missing for item:', item);
-            }
-        });
-    });
-}
-
-// Assume redirectToMovieDetails is defined elsewhere
-redirectToMovieDetails(movieId, mediaType) {
-    window.location.href = `detail.html?id=${movieId}&type=${mediaType}`;
-}
 
     renderSearchSuggestions(items) {
         const suggestionsContainer = document.getElementById('searchSuggestions');
@@ -430,7 +413,6 @@ redirectToMovieDetails(movieId, mediaType) {
             }).join('');
         suggestionsContainer.classList.add('active');
 
-        // Add click event listeners for search suggestion items
         this.addPosterClickListeners('.suggestion-item');
     }
 
