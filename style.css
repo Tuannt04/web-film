@@ -120,12 +120,12 @@ body {
     display: none;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     margin-top: 0.5rem;
-    scrollbar-width: none; /* Ẩn thanh cuộn trên Firefox */
-    -ms-overflow-style: none; /* Ẩn thanh cuộn trên IE/Edge */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
 .search-suggestions::-webkit-scrollbar {
-    display: none; /* Ẩn thanh cuộn trên Chrome, Safari */
+    display: none;
 }
 
 .search-suggestions.active {
@@ -571,6 +571,12 @@ body {
     color: white;
 }
 
+.scroll-btn-next:hover .fas,
+.scroll-btn-prev:hover .fas {
+    color: #ff0000;
+    transform: scale(1.1);
+}
+
 .trending-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -934,7 +940,6 @@ body {
     flex-shrink: 0;
 }
 
-/* Kiểu cho modal quốc gia */
 .country-modal {
     position: fixed;
     top: 0;
@@ -969,7 +974,7 @@ body {
 .country-modal-content h2 {
     position: sticky;
     top: 0;
-    background: #131313; /* Thay đổi từ trong suốt sang nền tối giống header */
+    background: #131313;
     z-index: 1;
     margin: 0 -1.5rem 1rem -1.5rem;
     padding: 1.5rem;
@@ -977,7 +982,7 @@ body {
     font-weight: bold;
     text-align: center;
     color: #fff;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Thêm đường viền dưới để phân cách */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .country-list {
@@ -1022,7 +1027,6 @@ body {
     color: #ff0000;
 }
 
-/* Kiểu cho modal thể loại */
 .genre-modal {
     position: fixed;
     top: 0;
@@ -1057,7 +1061,7 @@ body {
 .genre-modal-content h2 {
     position: sticky;
     top: 0;
-    background: #131313; /* Thay đổi từ trong suốt sang nền tối giống header */
+    background: #131313;
     z-index: 1;
     margin: 0 -1.5rem 1rem -1.5rem;
     padding: 1.5rem;
@@ -1065,7 +1069,7 @@ body {
     font-weight: bold;
     text-align: center;
     color: #fff;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Thêm đường viền dưới để phân cách */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .genre-list {
@@ -1110,7 +1114,6 @@ body {
     color: #ff0000;
 }
 
-/* Ẩn thanh cuộn cho modal */
 .country-modal-content::-webkit-scrollbar,
 .genre-modal-content::-webkit-scrollbar {
     display: none;
@@ -1119,4 +1122,14 @@ body {
 .country-modal-content,
 .genre-modal-content {
     scrollbar-width: none;
+}
+
+@media (max-width: 768px) {
+    .recent-item {
+        width: 50%;
+        min-width: 150px;
+    }
+    .recent-items-wrapper {
+        gap: 20px;
+    }
 }
